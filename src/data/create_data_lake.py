@@ -21,10 +21,31 @@ def create_data_lake():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
 
+    folders_to_create= ['data_lake',
+        'data_lake/landing',
+        'data_lake/raw',
+        'data_lake/cleansed',
+        'data_lake/business/',
+        'data_lake/business/reports/',
+        'data_lake/business/reports/figures',
+        'data_lake/business/features',
+        'data_lake/business/forecasts'
+    ]
+    
+    if os.path.exists('data_lake') is True:
+        shutil.rmtree('data_lake')
+
+    for folder in folders_to_create:
+        os.mkdir(folder)
+
+    """raise NotImplementedError("Implementar esta función")"""
+
+import os
+import sys
+import shutil
 
 if __name__ == "__main__":
     import doctest
-
+    create_data_lake()
     doctest.testmod()
