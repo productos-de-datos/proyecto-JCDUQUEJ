@@ -13,10 +13,33 @@ def ingest_data():
     descarga debe realizarse usando únicamente funciones de Python.
 
     """
-    raise NotImplementedError("Implementar esta función")
 
+    fpath = 'data_lake/landing/'
+
+    start_year = 1995
+    actual_year = int(datetime.datetime.now().date().strftime("%Y"))
+
+    wdir = 'https://github.com/jdvelasq/datalabs/tree/master/datasets/precio_bolsa_nacional/xls/'
+
+    files_in_folder = os.listdir(fpath)
+    for files in files_in_folder:
+        if len(files) > 0:
+            os.remove(fpath + '/' + files)
+
+    os.chdir(fpath)
+    for year_download in range(start_year,actual_year):
+        try:
+            wget.download(wdir + str(year_download) + '.xlsx')
+        except:
+            wget.download(wdir + str(year_download) + '.xls')
+
+    """raise NotImplementedError("Implementar esta función")"""
+
+import wget
+import os
+import datetime
 
 if __name__ == "__main__":
     import doctest
-
+    ingest_data()
     doctest.testmod()
