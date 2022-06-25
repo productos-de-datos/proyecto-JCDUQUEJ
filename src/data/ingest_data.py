@@ -17,8 +17,7 @@ def ingest_data():
     import os
     import pandas as pd
     import xlwt
-
-
+    import openpyxl
 
     fpath = 'data_lake/landing/'
 
