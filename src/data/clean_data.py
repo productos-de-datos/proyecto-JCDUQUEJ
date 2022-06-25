@@ -12,10 +12,14 @@ def clean_data():
 
 
     """
+    import os
+    import pandas as pd
+
+    
     raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
     import doctest
-
+    clean_data()
     doctest.testmod()

@@ -14,32 +14,54 @@ def ingest_data():
 
     """
 
+    import os
+    import pandas as pd
+    import xlwt
+
+
+
     fpath = 'data_lake/landing/'
 
     start_year = 1995
-    actual_year = int(datetime.datetime.now().date().strftime("%Y"))
-
-    wdir = 'https://github.com/jdvelasq/datalabs/tree/master/datasets/precio_bolsa_nacional/xls/'
+    end_year = 2022
+    wdir = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/'
 
     files_in_folder = os.listdir(fpath)
     for files in files_in_folder:
         if len(files) > 0:
             os.remove(fpath + '/' + files)
-
-    os.chdir(fpath)
-    for year_download in range(start_year,actual_year):
+    
+    
+    #os.chdir(fpath)
+    for year_to_download in range (start_year, end_year):
         try:
-            wget.download(wdir + str(year_download) + '.xlsx')
+            downloaded_file = pd.read_excel(wdir + '/' + str(year_to_download) + '.xlsx?raw=true')
+            downloaded_file.to_excel(fpath + str(year_to_download) + '.xlsx', index=None, header=True)
         except:
-            wget.download(wdir + str(year_download) + '.xls')
+            downloaded_file = pd.read_excel(wdir + '/' + str(year_to_download) + '.xls?raw=true')
+            downloaded_file.to_excel(fpath + str(year_to_download) + '.xls', index=None, header=True)
+    
 
-    """raise NotImplementedError("Implementar esta función")"""
 
-import wget
-import os
-import datetime
+    #for year_download in range(start_year,end_year):
+    #    try:
+    #        os.system("wget --quiet {wdir + + str(year_download) + '.xlsx?raw=true} -P fpath")
+    #        myfile = req.get(wdir+ str(year_download) + '.xlsx?raw=true', allow_redirects=True)
+    #        open(fpath + str(year_download) + '.xlsx', 'w').write(myfile.content)
+    #        wget.download(wdir + str(year_download) + '.xlsx?raw=true')
+    #    except:
+    #        os.system("wget --quiet {wdir + + str(year_download) + '.xls?raw=true} -P fpath")
+    #        wget.download(wdir + str(year_download) + '.xls?raw=true')
+    #        myfile = req.get(wdir+ str(year_download) + '.xls?raw=true', allow_redirects=True)
+    #        open(fpath + str(year_download) + '.xls', 'w').write(myfile.content)
+
+    #raise NotImplementedError("Implementar esta función")
+    
+
+#import wget
 
 if __name__ == "__main__":
     import doctest
-    ingest_data()
+    
     doctest.testmod()
+    ingest_data()
