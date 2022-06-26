@@ -25,10 +25,10 @@ def ingest_data():
     end_year = 2022
     wdir = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/'
 
-    files_in_folder = os.listdir(fpath)
-    for files in files_in_folder:
-        if len(files) > 0:
-            os.remove(fpath + '/' + files)
+    #files_in_folder = os.listdir(fpath)
+    #for files in files_in_folder:
+    #    if len(files) > 0:
+    #        os.remove(fpath + '/' + files)
     
     
     #os.chdir(fpath)
@@ -47,6 +47,5 @@ def ingest_data():
 
 if __name__ == "__main__":
     import doctest
-    
     doctest.testmod()
     ingest_data()

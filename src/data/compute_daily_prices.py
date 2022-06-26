@@ -22,9 +22,9 @@ def compute_daily_prices():
 
     files_destiny_folder = os.listdir(fpath_destiny)
 
-    for files in files_destiny_folder:
-        if files == fname_destiny:
-            os.remove(fpath_destiny + '/' + files)
+    #for files in files_destiny_folder:
+    #    if files == fname_destiny:
+    #        os.remove(fpath_destiny + '/' + files)
 
     daily_prices = pd.read_csv(fpath_origin + 'precios-horarios.csv', index_col=None, header=0)
     daily_prices = daily_prices[['Fecha','Precio']]

@@ -20,17 +20,18 @@ def clean_data():
 
     files_destiny_folder = os.listdir(fpath_destiny)
 
-    for files in files_destiny_folder:
-        if len(files) > 0:
-            os.remove(fpath_destiny + '/' + files)
+    #for files in files_destiny_folder:
+    #    if len(files) > 0:
+    #        os.remove(fpath_destiny + '/' + files)
 
     csv_files= os.listdir(fpath_origin)
 
     cleaned_prices = pd.DataFrame()
 
     for filename in csv_files:
-        data_in_file = pd.read_csv(fpath_origin + filename, index_col=None, header=0)
-        cleaned_prices = pd.concat(objs=[cleaned_prices,data_in_file], axis=0, ignore_index=False)
+        if filename.split('.')[-1] == 'csv':    
+            data_in_file = pd.read_csv(fpath_origin + filename, index_col=None, header=0)
+            cleaned_prices = pd.concat(objs=[cleaned_prices,data_in_file], axis=0, ignore_index=False)
 
     cleaned_prices['Fecha'] = cleaned_prices['Fecha'].apply(lambda x: str(x))
     cleaned_prices['Fecha'] = cleaned_prices['Fecha'].apply(lambda x: x[:10])

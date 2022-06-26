@@ -21,9 +21,9 @@ def compute_monthly_prices():
 
     files_destiny_folder = os.listdir(fpath_destiny)
 
-    for files in files_destiny_folder:
-        if files == fname_destiny:
-            os.remove(fpath_destiny + '/' + files)
+    #for files in files_destiny_folder:
+    #    if files == fname_destiny:
+    #        os.remove(fpath_destiny + '/' + files)
 
     monthly_prices = pd.read_csv(fpath_origin + 'precios-horarios.csv', index_col=None, header=0)
     monthly_prices = monthly_prices[['Fecha','Precio']]

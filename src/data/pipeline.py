@@ -11,15 +11,16 @@ En luigi llame las funciones que ya creo.
 
 
 """
-
+#import pandas
+#import openpyxl
+#import xlwt
 import luigi
 from luigi import Task, LocalTarget
 
-
-class ingestar_data(Task):
+class ingestacion(Task):
 
     def output(self):
-        return LocalTarget('data_lake/landing/arc.csv')
+        return LocalTarget('data_lake/landing/arc.txt')
 
     def run(self):
 
@@ -28,9 +29,9 @@ class ingestar_data(Task):
             ingest_data()
 
 
-class transformar_data(Task):
+class transformacion(Task):
     def requires(self):
-        return ingestar_data()
+        return ingestacion()
 
     def output(self):
         return LocalTarget('data_lake/raw/arc.txt')
@@ -42,9 +43,9 @@ class transformar_data(Task):
             transform_data()
 
 
-class limpiar_data(Task):
+class limpieza(Task):
     def requires(self):
-        return transformar_data()
+        return transformacion()
 
     def output(self):
         return LocalTarget('data_lake/cleansed/arc.txt')
@@ -56,9 +57,9 @@ class limpiar_data(Task):
             clean_data()
 
 
-class computar_precio_diario(Task):
+class precios_diarios(Task):
     def requires(self):
-        return limpiar_data()
+        return limpieza()
 
     def output(self):
         return LocalTarget('data_lake/business/arc.txt')
@@ -70,12 +71,12 @@ class computar_precio_diario(Task):
             compute_daily_prices()
 
 
-class computar_precio_mensual(Task):
+class precios_mensuales(Task):
     def requires(self):
-        return computar_precio_diario()
+        return precios_diarios()
 
     def output(self):
-        return LocalTarget('data_lake/business/arc.txt')
+        return LocalTarget('data_lake/business/arc1.txt')
 
     def run(self):
 
@@ -85,7 +86,7 @@ class computar_precio_mensual(Task):
 
 
 if __name__ == "__main__":
-    luigi.run(["computar_precio_mensual"])
+    luigi.run(["precios_mensuales","--local-scheduler"])
     #"--local-scheduler"
     #raise NotImplementedError("Implementar esta función")
 
