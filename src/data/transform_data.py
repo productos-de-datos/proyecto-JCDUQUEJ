@@ -12,6 +12,8 @@ def transform_data():
     """
     import os
     import pandas as pd
+    import openpyxl
+    import xlwt
 
     fpath_origin = './data_lake/landing/'
     fpath_destiny = './data_lake/raw/'
