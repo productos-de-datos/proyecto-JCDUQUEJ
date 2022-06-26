@@ -15,7 +15,9 @@ En luigi llame las funciones que ya creo.
 import luigi
 from luigi import Task, LocalTarget
 
+
 class ingestar_data(Task):
+
     def output(self):
         return LocalTarget('data_lake/landing/arc.csv')
 
@@ -80,10 +82,11 @@ class computar_precio_mensual(Task):
         from compute_monthly_prices import compute_monthly_prices
         with self.output().open('w') as archivos:
             compute_monthly_prices()
-            
+
 
 if __name__ == "__main__":
-    luigi.run(["computar_precio_mensual", "--local-scheduler"])
+    luigi.run(["computar_precio_mensual"])
+    #"--local-scheduler"
     #raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
