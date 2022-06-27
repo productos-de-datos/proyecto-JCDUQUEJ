@@ -30,8 +30,10 @@ def compute_monthly_prices():
     monthly_prices['Fecha'] = pd.to_datetime(monthly_prices['Fecha'])
     monthly_prices['Year'] = monthly_prices['Fecha'].dt.strftime('%Y')
     monthly_prices['Month'] = monthly_prices['Fecha'].dt.strftime('%m')
-
-    avg_monthly_prices = monthly_prices.groupby(['Year','Month'], as_index=False).mean({'Precio':'Precio'})
+    monthly_prices['Fecha'] = monthly_prices['Year'] + '-' + monthly_prices['Month'] + '-01'
+    monthly_prices['Fecha'] = pd.to_datetime(monthly_prices['Fecha'], format='%Y-%m-%d')
+    avg_monthly_prices = monthly_prices.groupby(['Fecha'], as_index=False).mean({'Precio':'Precio'})
+    print(avg_monthly_prices.head())
 
     avg_monthly_prices.to_csv(fpath_destiny + fname_destiny, index=None, header=True)
     #os.chdir('../../')

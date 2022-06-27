@@ -11,10 +11,6 @@ def make_monthly_prices_plot():
     import matplotlib.pyplot as plt
     from datetime import datetime
     monthly_prices = pd.read_csv('data_lake/business/precios-mensuales.csv', header=0)
-    monthly_prices['Year'] = monthly_prices['Year'].apply(lambda x: str(x))
-    monthly_prices['Month'] = monthly_prices['Month'].apply(lambda x: str(x))
-
-    monthly_prices['Fecha'] = monthly_prices['Year'] + '-' + monthly_prices['Month'] + '-01'
     monthly_prices['Fecha'] = pd.to_datetime(monthly_prices['Fecha'], format='%Y-%m-%d')
 
     X = monthly_prices['Fecha']
