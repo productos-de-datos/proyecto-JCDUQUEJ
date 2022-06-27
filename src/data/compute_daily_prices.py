@@ -29,8 +29,7 @@ def compute_daily_prices():
     daily_prices = pd.read_csv(fpath_origin + 'precios-horarios.csv', index_col=None, header=0)
     daily_prices = daily_prices[['Fecha','Precio']]
     daily_prices['Fecha'] = pd.to_datetime(daily_prices['Fecha'])
-    avg_daily_prices = daily_prices.groupby('Fecha').mean({'Precio':'Precio'})
-
+    avg_daily_prices = daily_prices.groupby('Fecha', as_index=False).mean({'Precio':'Precio'})
     avg_daily_prices.to_csv(fpath_destiny + fname_destiny, index=None, header=True)
 
 

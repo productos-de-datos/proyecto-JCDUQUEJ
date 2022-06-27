@@ -31,7 +31,7 @@ def compute_monthly_prices():
     monthly_prices['Year'] = monthly_prices['Fecha'].dt.strftime('%Y')
     monthly_prices['Month'] = monthly_prices['Fecha'].dt.strftime('%m')
 
-    avg_monthly_prices = monthly_prices.groupby(['Year','Month']).mean({'Precio':'Precio'})
+    avg_monthly_prices = monthly_prices.groupby(['Year','Month'], as_index=False).mean({'Precio':'Precio'})
 
     avg_monthly_prices.to_csv(fpath_destiny + fname_destiny, index=None, header=True)
 
