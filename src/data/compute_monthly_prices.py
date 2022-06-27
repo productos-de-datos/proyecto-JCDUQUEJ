@@ -34,7 +34,7 @@ def compute_monthly_prices():
     avg_monthly_prices = monthly_prices.groupby(['Year','Month'], as_index=False).mean({'Precio':'Precio'})
 
     avg_monthly_prices.to_csv(fpath_destiny + fname_destiny, index=None, header=True)
-    os.chdir('../../')
+    #os.chdir('../../')
     #raise NotImplementedError("Implementar esta función")
 
 

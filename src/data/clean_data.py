@@ -59,7 +59,7 @@ def clean_data():
         df_cleaned_prices=pd.concat(objs=[df_cleaned_prices,df_cleaned_prices_aux], axis=0, ignore_index=False)
 
     df_cleaned_prices.to_csv(fpath_destiny + 'precios-horarios.csv', index=None)
-    os.chdir('../../')
+    #os.chdir('../../')
 
 if __name__ == "__main__":
     import doctest

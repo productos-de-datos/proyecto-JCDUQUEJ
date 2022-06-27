@@ -40,7 +40,6 @@ def ingest_data():
             downloaded_file = pd.read_excel(wdir + '/' + str(year_to_download) + '.xls?raw=true')
             downloaded_file.to_excel(fpath + str(year_to_download) + '.xls', index=None, header=True)
 
-    os.chdir()
     #raise NotImplementedError("Implementar esta función")
     
 
