@@ -20,7 +20,7 @@ def compute_daily_prices():
     fpath_destiny = './data_lake/business/'
     fname_destiny = 'precios-diarios.csv'
 
-    files_destiny_folder = os.listdir(fpath_destiny)
+    #files_destiny_folder = os.listdir(fpath_destiny)
 
     #for files in files_destiny_folder:
     #    if files == fname_destiny:

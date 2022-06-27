@@ -76,7 +76,7 @@ class precios_mensuales(Task):
         return precios_diarios()
 
     def output(self):
-        return LocalTarget('data_lake/business/arc1.txt')
+        return LocalTarget('data_lake/business/arc.txt')
 
     def run(self):
 
