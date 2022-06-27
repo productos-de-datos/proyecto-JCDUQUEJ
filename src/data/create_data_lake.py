@@ -33,17 +33,18 @@ def create_data_lake():
         'data_lake/business/forecasts'
     ]
     
+    import os
+    import sys
+    import shutil
+
     if os.path.exists('data_lake') is True:
         shutil.rmtree('data_lake')
 
     for folder in folders_to_create:
         os.mkdir(folder)
-
-    """raise NotImplementedError("Implementar esta función")"""
-
-import os
-import sys
-import shutil
+    
+    os.chdir('../../')
+    #raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
     import doctest

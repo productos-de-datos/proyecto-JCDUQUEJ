@@ -42,7 +42,8 @@ def transform_data():
         
             read_file.columns = ['Fecha', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
             read_file.to_csv(fpath_destiny + str(year_to_transform) + '.csv', index=None)
-    
+    os.chdir('../../')
+
 if __name__ == "__main__":
     import doctest
 

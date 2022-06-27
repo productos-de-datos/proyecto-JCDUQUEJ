@@ -11,84 +11,74 @@ En luigi llame las funciones que ya creo.
 
 
 """
-#import pandas
-#import openpyxl
-#import xlwt
+
 import luigi
 from luigi import Task, LocalTarget
 
-class ingestacion(Task):
-
+class ingestar_data(Task):
     def output(self):
-        return LocalTarget('data_lake/landing/arc.txt')
+        return LocalTarget('data_lake/landing/arc.csv')
 
     def run(self):
-
         from ingest_data import ingest_data
         with self.output().open('w') as archivos:
             ingest_data()
 
 
-class transformacion(Task):
+class transformar_data(Task):
     def requires(self):
-        return ingestacion()
+        return ingestar_data()
 
     def output(self):
         return LocalTarget('data_lake/raw/arc.txt')
 
     def run(self):
-
         from transform_data import transform_data
         with self.output().open('w') as archivos:
             transform_data()
 
 
-class limpieza(Task):
+class limpiar_data(Task):
     def requires(self):
-        return transformacion()
+        return transformar_data()
 
     def output(self):
         return LocalTarget('data_lake/cleansed/arc.txt')
 
     def run(self):
-
         from clean_data import clean_data
         with self.output().open('w') as archivos:
             clean_data()
 
 
-class precios_diarios(Task):
+class computar_precio_diario(Task):
     def requires(self):
-        return limpieza()
+        return limpiar_data()
 
     def output(self):
         return LocalTarget('data_lake/business/arc.txt')
 
     def run(self):
-
         from compute_daily_prices import compute_daily_prices
         with self.output().open('w') as archivos:
             compute_daily_prices()
 
 
-class precios_mensuales(Task):
+class computar_precio_mensual(Task):
     def requires(self):
-        return precios_diarios()
+        return computar_precio_diario()
 
     def output(self):
         return LocalTarget('data_lake/business/arc.txt')
 
     def run(self):
-
         from compute_monthly_prices import compute_monthly_prices
         with self.output().open('w') as archivos:
             compute_monthly_prices()
 
 
-if __name__ == "__main__":
-    luigi.run(["precios_mensuales","--local-scheduler"])
-    #"--local-scheduler"
-    #raise NotImplementedError("Implementar esta función")
+if __name__ == '__main__':
+    luigi.run(["computar_precio_mensual", "--local-scheduler"])
 
 if __name__ == "__main__":
     import doctest

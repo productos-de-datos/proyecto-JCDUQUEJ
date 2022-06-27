@@ -31,6 +31,7 @@ def compute_daily_prices():
     daily_prices['Fecha'] = pd.to_datetime(daily_prices['Fecha'])
     avg_daily_prices = daily_prices.groupby('Fecha', as_index=False).mean({'Precio':'Precio'})
     avg_daily_prices.to_csv(fpath_destiny + fname_destiny, index=None, header=True)
+    os.chdir('../../')
 
 
 
