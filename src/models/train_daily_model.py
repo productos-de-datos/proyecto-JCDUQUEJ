@@ -6,14 +6,15 @@ def train_daily_model():
 
 
     """
-    import numpy as np
     import pandas as pd
+
+    #fpath ='./data_lake/business/features/'
+
+    daily_data = pd.read_csv('data_lake/business/features/precios_diarios.csv', index_col=None, header=0)
+    daily_data['Fecha'] = pd.to_datetime(daily_data['Fecha'])
+    
     import warnings
     warnings.filterwarnings("ignore")
-
-    daily_data = pd.read_csv('data_lake/business/features/precios-diarios.csv',index_col = None, header=0)
-    daily_data['Fecha'] = pd.to_datetime(daily_data['Fecha'])
-
     from sklearn import preprocessing
 
     encoder_Day_of_week = preprocessing.LabelEncoder().fit(daily_data['Day of week'])
@@ -36,7 +37,7 @@ def train_daily_model():
 
     def save_model_train(modelo):
         import pickle
-        with open("/src/models/precios-diarios.pickle", "wb") as file:
+        with open("src/models/precios-diarios.pkl", "wb") as file:
             pickle.dump(modelo, file,  pickle.HIGHEST_PROTOCOL)
     
     save_model_train(DT_model)
