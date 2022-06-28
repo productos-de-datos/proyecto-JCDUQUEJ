@@ -36,7 +36,7 @@ def train_daily_model():
 
     def save_model_train(modelo):
         import pickle
-        with open("src/models/precios-diarios.pickle", "wb") as file:
+        with open("../src/models/precios-diarios.pickle", "wb") as file:
             pickle.dump(modelo, file,  pickle.HIGHEST_PROTOCOL)
     
     save_model_train(DT_model)
