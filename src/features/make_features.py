@@ -16,9 +16,15 @@ def make_features():
     import pandas as pd
 
     data_in_file = pd.read_csv('data_lake/business/precios-diarios.csv', index_col=None, header=0)
-    index_lines = [row for row in range(0,len(data_in_file))]
-    data_in_file['index'] = index_lines
-    data_in_file=data_in_file.reindex(columns=['index','Fecha','Precio'])
+    #index_lines = [row for row in range(0,len(data_in_file))]
+    #data_in_file['index'] = index_lines
+    #data_in_file=data_in_file.reindex(columns=['index','Fecha','Precio'])
+    data_in_file['Fecha'] = pd.to_datetime(data_in_file['Fecha'])
+    data_in_file['Year'] = data_in_file['Fecha'].dt.strftime('%Y')
+    data_in_file['Month'] = data_in_file['Fecha'].dt.strftime('%m')
+    data_in_file['Week'] = data_in_file['Fecha'].dt.strftime('%W')
+    data_in_file['Day of week'] = data_in_file['Fecha'].dt.strftime('%A')
+    data_in_file=data_in_file.reindex(columns=['Fecha','Year','Month','Week','Day of week','Precio'])
     data_in_file.to_csv('data_lake/business/features/precios_diarios.csv', index=None)
     #raise NotImplementedError("Implementar esta función")
 
