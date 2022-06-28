@@ -33,7 +33,7 @@ pipeline:
 make_features:
 	python3 src/features/make_features.py
 
-train_model:
+train_daily_model:
 	python3 src/model/train_daily_model.py
 
 make_forecasts:
