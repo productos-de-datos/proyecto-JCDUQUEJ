@@ -34,10 +34,10 @@ def train_daily_model():
     DT_model = DecisionTreeRegressor()
     DT_model.fit(X_train,Y_train)
 
-    def save_model_train(DT_model):
+    def save_model_train(modelo):
         import pickle
         with open("src/models/precios-diarios.pickle", "wb") as file:
-            pickle.dump(DT_model, file,  pickle.HIGHEST_PROTOCOL)
+            pickle.dump(modelo, file,  pickle.HIGHEST_PROTOCOL)
     
     save_model_train(DT_model)
 
