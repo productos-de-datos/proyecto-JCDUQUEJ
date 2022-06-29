@@ -32,9 +32,11 @@ def transform_data():
         return files_origin_folder
 
     def get_header(year_to_transform):
-        """
+        """ Return the header
         >>> get_header(1996)
         3
+        >>> get_header(2002)
+        2
         """
         if year_to_transform in range(1995, 2000): 
             encabezado = 3     
