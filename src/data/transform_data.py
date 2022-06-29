@@ -10,6 +10,7 @@ def transform_data():
     tiene como columnas la fecha en formato YYYY-MM-DD y las horas H00, ...,
     H23.
 
+
     """
     import os
     import pandas as pd
@@ -31,6 +32,10 @@ def transform_data():
         return files_origin_folder
 
     def get_header(year_to_transform):
+        """
+        >>>get_header(1996)
+        3
+        """
         if year_to_transform in range(1995, 2000): 
             encabezado = 3     
         if year_to_transform in range(2000, 2018): 
@@ -44,7 +49,7 @@ def transform_data():
         read_file = read_file.iloc[encabezado:, 0:25]
         read_file.columns = columnas
         read_file.to_csv(fpath_destiny + str(year_to_transform) + '.csv', index=None)
-        
+
 
     fpath_origin = './data_lake/landing/'
     fpath_destiny = './data_lake/raw/'

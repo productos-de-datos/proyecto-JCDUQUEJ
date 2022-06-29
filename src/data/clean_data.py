@@ -1,6 +1,5 @@
 import csv
 
-
 def clean_data():
     """Realice la limpieza y transformación de los archivos CSV.
 
@@ -63,7 +62,6 @@ def clean_data():
 
     def save_cleaned_prices(df_cleaned_prices, fpath_destiny):
         df_cleaned_prices.to_csv(fpath_destiny + 'precios-horarios.csv', index=None)
-
 
 
     fpath_origin ='./data_lake/raw/'
