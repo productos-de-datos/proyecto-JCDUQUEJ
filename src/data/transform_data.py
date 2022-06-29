@@ -33,7 +33,7 @@ def transform_data():
 
     def get_header(year_to_transform):
         """
-        >>>get_header(1996)
+        >>> get_header(1996)
         3
         """
         if year_to_transform in range(1995, 2000): 
