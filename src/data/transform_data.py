@@ -34,9 +34,11 @@ def transform_data():
     def get_header(year_to_transform):
         """ Return the header
         TEST
-        >>> get_header(1996)
+        >>> year_to_transform = 1996
+        >>> get_header(year_to_transform)
         3
-        >>> get_header(2002)
+        >>> year_to_transform = 2002
+        >>> get_header(year_to_transform)
         2
         """
         if year_to_transform in range(1995, 2000): 
