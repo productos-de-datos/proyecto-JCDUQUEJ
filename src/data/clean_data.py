@@ -78,5 +78,6 @@ def clean_data():
 
 if __name__ == "__main__":
     import doctest
-    clean_data()
+
     doctest.testmod()
+    clean_data()
