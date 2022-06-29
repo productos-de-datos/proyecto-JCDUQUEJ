@@ -21,7 +21,18 @@ def create_data_lake():
 
 
     """
+    
+    import os
+    import sys
+    import shutil
 
+    def create_datalake(folders):
+        if os.path.exists('data_lake') is True:
+            shutil.rmtree('data_lake')
+
+        for folder in folders:
+            os.mkdir(folder)
+    
     folders_to_create= ['data_lake',
         'data_lake/landing',
         'data_lake/raw',
@@ -32,16 +43,8 @@ def create_data_lake():
         'data_lake/business/features',
         'data_lake/business/forecasts'
     ]
-    
-    import os
-    import sys
-    import shutil
 
-    if os.path.exists('data_lake') is True:
-        shutil.rmtree('data_lake')
-
-    for folder in folders_to_create:
-        os.mkdir(folder)
+    create_datalake(folders_to_create)
     
     os.chdir('../../')
     #raise NotImplementedError("Implementar esta función")

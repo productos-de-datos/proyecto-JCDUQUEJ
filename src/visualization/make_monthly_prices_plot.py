@@ -10,24 +10,29 @@ def make_monthly_prices_plot():
     import pandas as pd
     import matplotlib.pyplot as plt
     from datetime import datetime
-    monthly_prices = pd.read_csv('data_lake/business/precios-mensuales.csv', header=0)
-    monthly_prices['Fecha'] = pd.to_datetime(monthly_prices['Fecha'], format='%Y-%m-%d')
 
-    X = monthly_prices['Fecha']
-    y = monthly_prices['Precio']
+    def obtain_axix_plotting():
+        monthly_prices = pd.read_csv('data_lake/business/precios-mensuales.csv', header=0)
+        monthly_prices['Fecha'] = pd.to_datetime(monthly_prices['Fecha'], format='%Y-%m-%d')
+        X = monthly_prices['Fecha']
+        y = monthly_prices['Precio']
+        return X,y
+        
+    def plotting(X,y): 
+        plt.figure(figsize=(15, 6))
+        plt.plot(X, y, 'b', label='Prom. precio')
+        plt.title('Promedio de Precio Mensual de Energía')
+        plt.xlabel('Fecha')
+        plt.ylabel('Precio')
+        plt.legend()
+        plt.xticks(rotation="vertical")
+        plt.savefig("data_lake/business/reports/figures/monthly_prices.png")
     
-    plt.figure(figsize=(15, 6))
-    plt.plot(X, y, 'b', label='Prom. precio')
-    plt.title('Promedio de Precio Mensual de Energía')
-    plt.xlabel('Fecha')
-    plt.ylabel('Precio')
-    plt.legend()
-    plt.xticks(rotation="vertical")
-    plt.savefig("data_lake/business/reports/figures/monthly_prices.png")
-    #print(daily_prices.head())
-    
-    #raise NotImplementedError("Implementar esta función")
+    def run_monthly_prices_plot():
+        X, y = obtain_axix_plotting
+        plotting(X, y)
 
+    run_monthly_prices_plot()
 
 if __name__ == "__main__":
     import doctest

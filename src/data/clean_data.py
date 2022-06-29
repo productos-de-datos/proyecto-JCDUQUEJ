@@ -1,3 +1,6 @@
+import csv
+
+
 def clean_data():
     """Realice la limpieza y transformación de los archivos CSV.
 
@@ -15,51 +18,64 @@ def clean_data():
     import os
     import pandas as pd
 
+    def read_files_to_clean(fpath_origin): 
+        cleaned_prices = pd.DataFrame()   
+        csv_files = get_csv_files(fpath_origin)
+        for filename in csv_files:
+            if filename.split('.')[-1] == 'csv':    
+                data_in_file = pd.read_csv(fpath_origin + filename, index_col=None, header=0)
+                cleaned_prices = pd.concat(objs=[cleaned_prices,data_in_file], axis=0, ignore_index=False)
+        return cleaned_prices
+
+    def get_csv_files(fpath_origin):
+        csv_files = os.listdir(fpath_origin)
+        return csv_files
+
+    def format_transform(cleaned_prices):
+        cleaned_prices['Fecha'] = cleaned_prices['Fecha'].apply(lambda x: str(x))
+        cleaned_prices['Fecha'] = cleaned_prices['Fecha'].apply(lambda x: x[:10])
+        cleaned_prices = cleaned_prices[cleaned_prices['Fecha'].notnull()]
+        return cleaned_prices
+
+    def create_new_df():
+        df_cleaned_prices = pd.DataFrame()
+        df_cleaned_prices['Fecha']=None
+        df_cleaned_prices['Hora']=None
+        df_cleaned_prices['Precio']=None
+
+        df_cleaned_prices_aux = pd.DataFrame()
+        df_cleaned_prices_aux['Fecha']=None
+        df_cleaned_prices_aux['Hora']=None
+        df_cleaned_prices_aux['Precio']=None
+
+        return df_cleaned_prices, df_cleaned_prices_aux
+
+    def create_cleaned_prices(cleaned_prices, df_cleaned_prices, df_cleaned_prices_aux):
+        for hora in range(0,24):
+            hora_str = str(hora)
+
+            df_cleaned_prices_aux['Fecha']=cleaned_prices['Fecha']
+            df_cleaned_prices_aux['Hora']=hora_str
+            df_cleaned_prices_aux['Precio']=cleaned_prices[hora_str]
+
+            df_cleaned_prices=pd.concat(objs=[df_cleaned_prices,df_cleaned_prices_aux], axis=0, ignore_index=False)
+        return df_cleaned_prices
+
+    def save_cleaned_prices(df_cleaned_prices, fpath_destiny):
+        df_cleaned_prices.to_csv(fpath_destiny + 'precios-horarios.csv', index=None)
+
+    def run_clean_data(fpath_origin, fpath_destiny):
+        cleaned_prices = read_files_to_clean(fpath_origin)
+        cleaned_prices = format_transform(cleaned_prices)
+        df_cleaned_prices, df_cleaned_prices_aux = create_new_df()
+        df_cleaned_prices = create_cleaned_prices(cleaned_prices, df_cleaned_prices, df_cleaned_prices_aux)
+        save_cleaned_prices(df_cleaned_prices, fpath_destiny)
+
+
     fpath_origin ='./data_lake/raw/'
     fpath_destiny = './data_lake/cleansed/'
+    run_clean_data(fpath_origin, fpath_destiny)
 
-    files_destiny_folder = os.listdir(fpath_destiny)
-
-    #for files in files_destiny_folder:
-    #    if len(files) > 0:
-    #        os.remove(fpath_destiny + '/' + files)
-
-    csv_files= os.listdir(fpath_origin)
-
-    cleaned_prices = pd.DataFrame()
-
-    for filename in csv_files:
-        if filename.split('.')[-1] == 'csv':    
-            data_in_file = pd.read_csv(fpath_origin + filename, index_col=None, header=0)
-            cleaned_prices = pd.concat(objs=[cleaned_prices,data_in_file], axis=0, ignore_index=False)
-
-    cleaned_prices['Fecha'] = cleaned_prices['Fecha'].apply(lambda x: str(x))
-    cleaned_prices['Fecha'] = cleaned_prices['Fecha'].apply(lambda x: x[:10])
-    cleaned_prices = cleaned_prices[cleaned_prices['Fecha'].notnull()]
-
-    #cleaned_prices.to_csv(fpath_destiny + 'precios-horarios.csv', index=None)
-
-    df_cleaned_prices = pd.DataFrame()
-    df_cleaned_prices['Fecha']=None
-    df_cleaned_prices['Hora']=None
-    df_cleaned_prices['Precio']=None
-    
-    df_cleaned_prices_aux = pd.DataFrame()
-    df_cleaned_prices_aux['Fecha']=None
-    df_cleaned_prices_aux['Hora']=None
-    df_cleaned_prices_aux['Precio']=None
-
-    for hora in range(0,24):
-        hora_str = str(hora)
-
-        df_cleaned_prices_aux['Fecha']=cleaned_prices['Fecha']
-        df_cleaned_prices_aux['Hora']=hora_str
-        df_cleaned_prices_aux['Precio']=cleaned_prices[hora_str]
-
-        df_cleaned_prices=pd.concat(objs=[df_cleaned_prices,df_cleaned_prices_aux], axis=0, ignore_index=False)
-
-    df_cleaned_prices.to_csv(fpath_destiny + 'precios-horarios.csv', index=None)
-    #os.chdir('../../')
 
 if __name__ == "__main__":
     import doctest
