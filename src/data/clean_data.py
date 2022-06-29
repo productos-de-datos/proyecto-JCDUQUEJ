@@ -64,17 +64,16 @@ def clean_data():
     def save_cleaned_prices(df_cleaned_prices, fpath_destiny):
         df_cleaned_prices.to_csv(fpath_destiny + 'precios-horarios.csv', index=None)
 
-    def run_clean_data(fpath_origin, fpath_destiny):
-        cleaned_prices = read_files_to_clean(fpath_origin)
-        cleaned_prices = format_transform(cleaned_prices)
-        df_cleaned_prices, df_cleaned_prices_aux = create_new_df()
-        df_cleaned_prices = create_cleaned_prices(cleaned_prices, df_cleaned_prices, df_cleaned_prices_aux)
-        save_cleaned_prices(df_cleaned_prices, fpath_destiny)
 
 
     fpath_origin ='./data_lake/raw/'
     fpath_destiny = './data_lake/cleansed/'
-    run_clean_data(fpath_origin, fpath_destiny)
+    cleaned_prices = read_files_to_clean(fpath_origin)
+    cleaned_prices = format_transform(cleaned_prices)
+    df_cleaned_prices, df_cleaned_prices_aux = create_new_df()
+    df_cleaned_prices = create_cleaned_prices(cleaned_prices, df_cleaned_prices, df_cleaned_prices_aux)
+    save_cleaned_prices(df_cleaned_prices, fpath_destiny)
+
 
 
 if __name__ == "__main__":

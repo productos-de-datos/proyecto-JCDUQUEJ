@@ -27,11 +27,9 @@ def make_daily_prices_plot():
         plt.xticks(rotation="vertical")
         plt.savefig("data_lake/business/reports/figures/daily_prices.png")
 
-    def run_daily_prices_plot():
-        X, y = obtain_axix_plotting
-        plotting(X, y)
-    
-    run_daily_prices_plot()
+    X, y = obtain_axix_plotting
+    plotting(X, y)
+
 
 if __name__ == "__main__":
     import doctest

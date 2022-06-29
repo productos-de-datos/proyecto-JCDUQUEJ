@@ -27,12 +27,9 @@ def make_monthly_prices_plot():
         plt.legend()
         plt.xticks(rotation="vertical")
         plt.savefig("data_lake/business/reports/figures/monthly_prices.png")
-    
-    def run_monthly_prices_plot():
-        X, y = obtain_axix_plotting
-        plotting(X, y)
 
-    run_monthly_prices_plot()
+    X, y = obtain_axix_plotting
+    plotting(X, y)
 
 if __name__ == "__main__":
     import doctest

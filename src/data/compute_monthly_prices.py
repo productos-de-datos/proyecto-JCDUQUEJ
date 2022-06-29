@@ -30,17 +30,13 @@ def compute_monthly_prices():
     
     def save_monthly_prices(avg_monthly_prices, fpath_destiny, fname_destiny):
         avg_monthly_prices.to_csv(fpath_destiny + fname_destiny, index=None, header=True)
-    
-    def run_compute_monthly_prices(fpath_origin,fpath_destiny,fname_destiny):
-        monthly_prices = format_monthly_prices(fpath_origin)
-        avg_monthly_prices = mean_monthly_prices(monthly_prices)
-        save_monthly_prices(avg_monthly_prices, fpath_destiny, fname_destiny)
-
 
     fpath_origin ='./data_lake/cleansed/'
     fpath_destiny = './data_lake/business/'
     fname_destiny = 'precios-mensuales.csv'
-    run_compute_monthly_prices(fpath_origin,fpath_destiny,fname_destiny)
+    monthly_prices = format_monthly_prices(fpath_origin)
+    avg_monthly_prices = mean_monthly_prices(monthly_prices)
+    save_monthly_prices(avg_monthly_prices, fpath_destiny, fname_destiny)
 
 
 if __name__ == "__main__":

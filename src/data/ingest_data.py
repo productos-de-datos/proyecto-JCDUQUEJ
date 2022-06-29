@@ -33,8 +33,7 @@ def ingest_data():
     end_year = 2022
     wdir = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/'
     download_files(start_year,end_year,wdir,fpath)
-
-    #raise NotImplementedError("Implementar esta función")
+    
     
 
 if __name__ == "__main__":

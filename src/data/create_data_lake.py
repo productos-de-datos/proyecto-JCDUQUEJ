@@ -47,7 +47,7 @@ def create_data_lake():
     create_datalake(folders_to_create)
     
     os.chdir('../../')
-    #raise NotImplementedError("Implementar esta función")
+
 
 if __name__ == "__main__":
     import doctest
