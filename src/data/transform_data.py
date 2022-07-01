@@ -1,6 +1,10 @@
 from posixpath import split
 from nbformat import read
 
+import os
+import pandas as pd
+import openpyxl
+import xlwt
 
 def transform_data():
     """Transforme los archivos xls a csv.
@@ -23,10 +27,7 @@ def transform_data():
     
 
     """
-    import os
-    import pandas as pd
-    import openpyxl
-    import xlwt
+
     fpath_origin = './data_lake/landing/'
     fpath_destiny = './data_lake/raw/'
     columnas = ['Fecha', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
@@ -76,6 +77,5 @@ def transform_file(fpath_origin, fpath_destiny, files, encabezado, columnas, yea
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
     transform_data()
