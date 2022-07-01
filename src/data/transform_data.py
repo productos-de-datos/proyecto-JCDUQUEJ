@@ -14,18 +14,6 @@ def transform_data():
     tiene como columnas la fecha en formato YYYY-MM-DD y las horas H00, ...,
     H23.
 
-    Return the header
-    TEST
-
-    >>> year_to_transform = 1996
-    >>> get_header(year_to_transform)
-    3
-
-    >>> year_to_transform = 2002
-    >>> get_header(year_to_transform)
-    2
-    
-
     """
 
     fpath_origin = './data_lake/landing/'
@@ -50,14 +38,16 @@ def get_files_origin_folder(fpath_origin):
 
 def get_header(year_to_transform):
     """ Return the header
-    TEST
+
     >>> year_to_transform = 1996
     >>> get_header(year_to_transform)
     3
+
     >>> year_to_transform = 2002
     >>> get_header(year_to_transform)
     2
     """
+
     if year_to_transform in range(1995, 2000): 
         encabezado = 3     
     if year_to_transform in range(2000, 2018): 
@@ -71,8 +61,6 @@ def transform_file(fpath_origin, fpath_destiny, files, encabezado, columnas, yea
     read_file = read_file.iloc[encabezado:, 0:25]
     read_file.columns = columnas
     read_file.to_csv(fpath_destiny + str(year_to_transform) + '.csv', index=None)
-
-
 
 
 if __name__ == "__main__":
