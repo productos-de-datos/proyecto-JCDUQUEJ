@@ -10,6 +10,17 @@ def transform_data():
     tiene como columnas la fecha en formato YYYY-MM-DD y las horas H00, ...,
     H23.
 
+    Return the header
+    TEST
+
+    >>> year_to_transform = 1996
+    >>> get_header(year_to_transform)
+    3
+
+    >>> year_to_transform = 2002
+    >>> get_header(year_to_transform)
+    2
+    
 
     """
     import os
