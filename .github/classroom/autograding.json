@@ -133,7 +133,7 @@
     {
       "name": "Test 14",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "doctest src/data/*.py",
+      "run": "pytest .",
       "input": "",
       "output": "",
       "comparison": "included",
