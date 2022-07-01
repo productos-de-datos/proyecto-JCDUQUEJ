@@ -31,6 +31,7 @@ def make_features():
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
+    
+if __name__ == "__main__":
     make_features()
