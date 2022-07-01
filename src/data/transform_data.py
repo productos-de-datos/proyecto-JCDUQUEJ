@@ -62,6 +62,8 @@ def transform_file(fpath_origin, fpath_destiny, files, encabezado, columnas, yea
     read_file.columns = columnas
     read_file.to_csv(fpath_destiny + str(year_to_transform) + '.csv', index=None)
 
+def test_answer():
+    assert get_header(1996) == 3
 
 if __name__ == "__main__":
     import doctest
