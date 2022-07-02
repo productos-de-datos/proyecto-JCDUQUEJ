@@ -17,14 +17,13 @@ def train_daily_model():
     """
     daily_data = read_data()
     train, valid = spliting_data(daily_data)
-    DT_model = create_model(train)
+    DT_model = trained_model(train)
     save_model_train(DT_model)
 
 def read_data():
     daily_data = pd.read_csv('data_lake/business/features/precios_diarios.csv', index_col=None, header=0)
     daily_data['Fecha'] = pd.to_datetime(daily_data['Fecha'])
     daily_data.index = daily_data.Fecha
-    del(daily_data['Fecha'])
     return daily_data
 
 def spliting_data(daily_data):
@@ -33,11 +32,10 @@ def spliting_data(daily_data):
     valid = daily_data[int(0.85*(len(daily_data))):]
     return train, valid
     
-
-def create_model(train):
+def trained_model(train):
     DT_model = SARIMAX(train['Precio'], order = (4, 1, 5), seasonal_order =(0, 0, 0, 0))
-    DT_model.fit()
-    return DT_model
+    result_model = DT_model.fit()
+    return result_model
 
 def save_model_train(modelo):
     import pickle
