@@ -1,3 +1,12 @@
+import pandas as pd
+from pmdarima import auto_arima
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split 
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+
 def train_daily_model():
     """Entrena el modelo de pronóstico de precios diarios.
 
@@ -6,47 +15,40 @@ def train_daily_model():
 
 
     """
-    import pandas as pd
-
-    #fpath ='./data_lake/business/features/'
-
-    daily_data = pd.read_csv('data_lake/business/features/precios_diarios.csv', index_col=None, header=0)
-    daily_data['Fecha'] = pd.to_datetime(daily_data['Fecha'])
-    
-    import warnings
-    warnings.filterwarnings("ignore")
-    from sklearn import preprocessing
-
-    encoder_Day_of_week = preprocessing.LabelEncoder().fit(daily_data['Day of week'])
-    daily_data["Day_of_week_factor"] = encoder_Day_of_week.transform(daily_data['Day of week'])
-    daily_data.dtypes
-
-    from sklearn.model_selection import train_test_split 
-    X = daily_data.copy()
-    del(X['Fecha'])
-    del(X['Day of week'])
-    y = X['Precio']
-    del(X['Precio'])
-    
-    X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=.25, random_state=40)
-
-    from sklearn.tree import DecisionTreeRegressor
-
-    DT_model = DecisionTreeRegressor()
-    DT_model.fit(X_train,Y_train)
-
-    def save_model_train(modelo):
-        import pickle
-        with open("src/models/precios-diarios.pkl", "wb") as file:
-            pickle.dump(modelo, file,  pickle.HIGHEST_PROTOCOL)
-    
+    daily_data = read_data()
+    train, valid = spliting_data(daily_data)
+    DT_model = create_model(train)
     save_model_train(DT_model)
 
-    #raise NotImplementedError("Implementar esta función")
+def read_data():
+    daily_data = pd.read_csv('data_lake/business/features/precios_diarios.csv', index_col=None, header=0)
+    daily_data['Fecha'] = pd.to_datetime(daily_data['Fecha'])
+    daily_data.index = daily_data.Fecha
+    del(daily_data['Fecha'])
+    return daily_data
 
+def spliting_data(daily_data):
+    # split data to train and test
+    train = daily_data[:int(0.85*len(daily_data))]
+    valid = daily_data[int(0.85*(len(daily_data))):]
+    return train, valid
+    
+
+def create_model(train):
+    DT_model = SARIMAX(train['Precio'], order = (4, 1, 5), seasonal_order =(0, 0, 0, 0))
+    DT_model.fit()
+    return DT_model
+
+def save_model_train(modelo):
+    import pickle
+    with open("src/models/precios-diarios.pkl", "wb") as file:
+        pickle.dump(modelo, file,  pickle.HIGHEST_PROTOCOL)
 
 if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
     train_daily_model()
+
+
+
