@@ -13,10 +13,30 @@ def ingest_data():
     descarga debe realizarse usando únicamente funciones de Python.
 
     """
-    raise NotImplementedError("Implementar esta función")
 
+    import os
+    import pandas as pd
+    import xlwt
+    import openpyxl
+
+    def download_files(start_year, end_year, wdir, fpath):
+        for year_to_download in range (start_year, end_year):
+            try:
+                downloaded_file = pd.read_excel(wdir + '/' + str(year_to_download) + '.xlsx?raw=true')
+                downloaded_file.to_excel(fpath + str(year_to_download) + '.xlsx', index=None, header=True)
+            except:
+                downloaded_file = pd.read_excel(wdir + '/' + str(year_to_download) + '.xls?raw=true')
+                downloaded_file.to_excel(fpath + str(year_to_download) + '.xls', index=None, header=True)
+
+    fpath = 'data_lake/landing/'
+    start_year = 1995
+    end_year = 2022
+    wdir = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/'
+    download_files(start_year,end_year,wdir,fpath)
+    
+    
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
+    ingest_data()
